@@ -30,21 +30,21 @@ export default class BoardList extends Component {
           cards: [
             {
               id: 'Card1',
-              title: '拖动排序',
-              description: '任务列表也可以拖动排序，拖动一个任务列表试试看',
+              title: '栾小亦',
+              description: '提交短信发送任务，任务量80（条）',
               label: '30 mins',
             },
             {
               id: 'Card2',
-              title: '新建任务',
-              description: '点击【Add Card】，试试创建一条新的任务',
+              title: '栾小洛',
+              description: '提交短信发送任务，任务量66（条）',
               label: '5 mins',
               metadata: { sha: 'be312a1' },
             },
             {
               id: 'Card3',
-              title: '任务时间',
-              description: '设置了截止时间的任务，会在任务日历中显示',
+              title: '栾小乙',
+              description: '提交短信发送任务，任务量40（条）',
               label: '5 mins',
               metadata: { sha: 'be312a1' },
             },
