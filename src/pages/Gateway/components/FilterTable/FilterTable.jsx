@@ -5,7 +5,6 @@ import DataBinder from '@icedesign/data-binder';
 import { Table, Dialog, Form, Button , Input,  Pagination, Message} from '@alifd/next';
 import IceLabel from '@icedesign/label';
 import FilterForm from './Filter';
-import data from './data';
 
 
 @DataBinder({
@@ -113,7 +112,7 @@ export default class EnhanceTable extends Component {
 
     return (
       <div className="filter-table">
-        <IceContainer title="网关列表">
+        <IceContainer title="添加网关">
           <FilterForm
             onChange={this.filterFormChange}
             onSubmit={this.filterTable}

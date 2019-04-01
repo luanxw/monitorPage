@@ -21,81 +21,34 @@ export default class Filter extends Component {
       >
         <div>
           <Row wrap>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>所属应用</label>
-              <IceFormBinder name="app">
+            <Col xxs={10} xs={12} l={6} style={styles.filterCol}>
+              <label style={styles.filterTitle}>端口号</label>
+              <IceFormBinder name="port">
                 <Input />
               </IceFormBinder>
             </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>分类ID</label>
-              <IceFormBinder name="id">
+            <Col xxs={10} xs={12} l={6} style={styles.filterCol}>
+              <label style={styles.filterTitle}>网关名</label>
+              <IceFormBinder name="gwName">
                 <Input />
               </IceFormBinder>
             </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>标签ID</label>
-              <IceFormBinder name="tag">
+            <Col xxs={10} xs={12} l={6} style={styles.filterCol}>
+              <label style={styles.filterTitle}>用户</label>
+              <IceFormBinder name="user">
                 <Input />
               </IceFormBinder>
             </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>开始时间</label>
-              <IceFormBinder
-                name="startTime"
-                valueFormatter={(date, strValue) => {
-                  return strValue;
-                }}
-              >
-                <DatePicker style={styles.filterTool} />
-              </IceFormBinder>
-            </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>结束时间</label>
-              <IceFormBinder
-                name="endTime"
-                valueFormatter={(date, strValue) => {
-                  return strValue;
-                }}
-              >
-                <DatePicker style={styles.filterTool} />
-              </IceFormBinder>
-            </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>尺寸</label>
-              <IceFormBinder name="size">
-                <Select placeholder="请选择" style={styles.filterTool}>
-                  <Option value="small">Small</Option>
-                  <Option value="medium">Medium</Option>
-                  <Option value="large">Large</Option>
-                </Select>
-              </IceFormBinder>
-            </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>删除状态</label>
-              <IceFormBinder name="status">
+            <Col xxs={24} xs={12} l={6} style={styles.filterCol}>
+              <label style={styles.filterTitle}>激活状态</label>
+              <IceFormBinder name="validFlag">
                 <Select style={styles.filterTool}>
-                  <Option value="success">成功</Option>
-                  <Option value="failed">失败</Option>
+                  <Option value="Y">Y</Option>
+                  <Option value="N">N</Option>
                 </Select>
               </IceFormBinder>
             </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>讨论ID</label>
-              <IceFormBinder name="commentId">
-                <Input />
-              </IceFormBinder>
-            </Col>
-            <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
-              <label style={styles.filterTitle}>置顶</label>
-              <IceFormBinder name="isStick">
-                <Select placeholder="请选择" style={styles.filterTool}>
-                  <Option value="all">不限</Option>
-                  <Option value="stick">置顶</Option>
-                  <Option value="not-stick">不置顶</Option>
-                </Select>
-              </IceFormBinder>
-            </Col>
+            
           </Row>
           <div
             style={{
@@ -103,15 +56,12 @@ export default class Filter extends Component {
               marginLeft: '12px',
             }}
           >
-            <Button onClick={this.props.onReset} type="normal">
-              重置
-            </Button>
             <Button
               onClick={this.props.onSubmit}
               type="primary"
-              style={{ marginLeft: '10px' }}
+              style={{ marginLeft: '550px' }}
             >
-              确定
+              保  存
             </Button>
           </div>
         </div>

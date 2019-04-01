@@ -107,7 +107,7 @@ export default class Filter extends Component {
             </Col>
             <Col xxs={24} xs={12} l={8} style={styles.filterCol}>
               <label style={styles.filterTitle}>激活状态</label>
-              <IceFormBinder name="status">
+              <IceFormBinder name="validFlag">
                 <Select style={styles.filterTool}>
                   <Option value="Y">Y</Option>
                   <Option value="N">N</Option>
