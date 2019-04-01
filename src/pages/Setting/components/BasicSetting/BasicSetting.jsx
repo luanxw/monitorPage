@@ -69,29 +69,7 @@ export default class BasicSetting extends Component {
                   />
                 </IceFormBinder>
               </div>
-              {/* <div style={styles.formItem}>
-                <div style={styles.formLabel}>项目简介：</div>
-                <IceFormBinder name="description">
-                  <Input.TextArea style={{ width: '400px' }} />
-                </IceFormBinder>
-              </div> */}
-              {/* <div style={styles.formItem}>
-                <div style={styles.formLabel}>仓库地址：</div>
-                <IceFormBinder
-                  required
-                  triggerType="onBlur"
-                  message="验证地址必填"
-                  name="url"
-                >
-                  <Input
-                    type="url"
-                    style={{ width: '400px' }}
-                  />
-                </IceFormBinder>
-                <div style={styles.formError}>
-                  <IceFormError name="url" />
-                </div>
-              </div> */}
+              
                  <div style={styles.formItem}>
                 <div style={styles.formLabel}>密码：</div>
                 <IceFormBinder
@@ -144,7 +122,9 @@ export default class BasicSetting extends Component {
                 </div>
               </div>
               <Button
+                size="large"
                 type="primary"
+                style={styles.luan}
                 onClick={this.validateAllFormField}
               >
                 确 认 修  改
@@ -159,7 +139,12 @@ export default class BasicSetting extends Component {
 
 const styles = {
   container: {
-    margin: '20px',
+    // margin: '20px',
+    // padding: '0',
+    alignItems: 'center',
+    marginLeft: '400px',
+    marginRight: '480px',
+    marginTop: '40px',
   },
   title: {
     marginBottom: '10px',
@@ -178,5 +163,11 @@ const styles = {
   },
   formError: {
     marginTop: '10px',
+  },
+  luan: {
+    alignItems: 'center',
+    marginLeft: '150px',
+    marginRight: '480px',
+    marginTop: '40px',
   },
 };
