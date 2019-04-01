@@ -20,8 +20,8 @@ export default class BasicSetting extends Component {
     super(props);
     this.state = {
       value: {
-        zhName: '飞冰',
-        cName: 'ICE',
+        zhName: '管理员',
+        cName: 'admin',
       },
     };
   }
@@ -43,7 +43,7 @@ export default class BasicSetting extends Component {
   render() {
     return (
       <div>
-        <ContainerTitle title="基本设置" />
+        <ContainerTitle title="修改基本信息" />
         <IceContainer style={styles.container}>
           <IceFormBinderWrapper
             value={this.state.value}
@@ -69,13 +69,13 @@ export default class BasicSetting extends Component {
                   />
                 </IceFormBinder>
               </div>
-              <div style={styles.formItem}>
+              {/* <div style={styles.formItem}>
                 <div style={styles.formLabel}>项目简介：</div>
                 <IceFormBinder name="description">
                   <Input.TextArea style={{ width: '400px' }} />
                 </IceFormBinder>
-              </div>
-              <div style={styles.formItem}>
+              </div> */}
+              {/* <div style={styles.formItem}>
                 <div style={styles.formLabel}>仓库地址：</div>
                 <IceFormBinder
                   required
@@ -91,9 +91,43 @@ export default class BasicSetting extends Component {
                 <div style={styles.formError}>
                   <IceFormError name="url" />
                 </div>
+              </div> */}
+                 <div style={styles.formItem}>
+                <div style={styles.formLabel}>密码：</div>
+                <IceFormBinder
+                  required
+                  triggerType="onBlur"
+                  message="密码必填"
+                  name="password1"
+                >
+                  <Input
+                    type="password1"
+                    style={{ width: '400px' }}
+                  />
+                </IceFormBinder>
+                <div style={styles.formError}>
+                  <IceFormError name="password1" />
+                </div>
               </div>
               <div style={styles.formItem}>
-                <div style={styles.formLabel}>反馈邮箱：</div>
+                <div style={styles.formLabel}>确认密码：</div>
+                <IceFormBinder
+                  required
+                  triggerType="onBlur"
+                  message="密码必填"
+                  name="password2"
+                >
+                  <Input
+                    type="password2"
+                    style={{ width: '400px' }}
+                  />
+                </IceFormBinder>
+                <div style={styles.formError}>
+                  <IceFormError name="password2" />
+                </div>
+              </div>
+              <div style={styles.formItem}>
+                <div style={styles.formLabel}>邮箱：</div>
                 <IceFormBinder
                   required
                   triggerType="onBlur"
@@ -113,7 +147,7 @@ export default class BasicSetting extends Component {
                 type="primary"
                 onClick={this.validateAllFormField}
               >
-                提 交
+                确 认 修  改
               </Button>
             </div>
           </IceFormBinderWrapper>

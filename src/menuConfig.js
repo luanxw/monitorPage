@@ -23,11 +23,11 @@ const asideMenuConfig = [
     path: '/dashboard',
     icon: 'home2',
   },
-  {
-    name: '项目',
-    path: '/services',
-    icon: 'cascades',
-  },
+  // {
+  //   name: '项目',
+  //   path: '/services',
+  //   icon: 'cascades',
+  // },
   {
     name: '事件',
     path: '/document',
@@ -37,11 +37,6 @@ const asideMenuConfig = [
     name: '任务',
     path: '/activities',
     icon: 'activity',
-  },
-  {
-    name: '成员',
-    path: '/member',
-    icon: 'person',
   },
   {
     name: '发送',
@@ -57,6 +52,11 @@ const asideMenuConfig = [
     name: '端口',
     path: '/port',
     icon: 'cascades',
+  },
+  {
+    name: '用户',
+    path: '/member',
+    icon: 'person',
   },
   {
     name: '设置',
