@@ -102,7 +102,7 @@ export default class SettingsForm extends Component {
                 required
                 requiredMessage="必填"
               >
-                <RadioGroup name="gender">
+                <RadioGroup name="Immediately">
                   <Radio value="Y">是</Radio>
                   <Radio value="N">否</Radio>
                 </RadioGroup>
@@ -123,6 +123,7 @@ export default class SettingsForm extends Component {
             
               <FormItem size="large" label="短信内容："  {...formItemLayout}>
                 <Input.TextArea 
+                 name="context"
                  maxLength={100}
                  rows={8}
                  hasLimitHint
