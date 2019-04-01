@@ -9,8 +9,8 @@ const { Group: RadioGroup } = Radio;
 const FormItem = Form.Item;
 
 const formItemLayout = {
-  labelCol: { xxs: 6, s: 3, l: 3 },
-  wrapperCol: { s: 12, l: 10 },
+  labelCol: { xxs: 6, s: 6, l: 3 },
+  wrapperCol: { s: 2, l: 3 },
 };
 
 function beforeUpload(info) {
@@ -79,113 +79,64 @@ export default class SettingsForm extends Component {
 
   render() {
     return (
-      <div className="settings-form">
+      <div className="settings-form" >
         <IceContainer>
           <Form value={this.state.value} onChange={this.formChange} ref="form">
             <div style={styles.formContent}>
-              <h2 style={styles.formTitle}>基本设置</h2>
+              <h2 style={styles.formTitle}>发送短信</h2>
 
               <FormItem
-                size="large"
-                label="姓名："
+                label="手机号"
                 {...formItemLayout}
                 required
-                maxLength={10}
+                minLength={11}
+                maxLength={11}
                 requiredMessage="必填"
               >
-                <Input name="name" placeholder="于江水" />
+                <Input  name="number" placeholder="eg:18866669999" />
               </FormItem>
-              {/* <FormItem
-                label="头像："
-                {...formItemLayout}
-                required
-                requiredMessage="必填"
-              >
-                <Upload.Card
-                  name="avatar"
-                  listType="card"
-                  action=""
-                  accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                  beforeUpload={beforeUpload}
-                  onChange={onChange}
-                  onSuccess={onSuccess}
-                  onError={onError}
-                />
-              </FormItem> */}
+             
               <FormItem
-                label="性别："
+                label="立即发送"
                 {...formItemLayout}
                 required
                 requiredMessage="必填"
               >
                 <RadioGroup name="gender">
-                  <Radio value="male">男</Radio>
-                  <Radio value="female">女</Radio>
+                  <Radio value="Y">是</Radio>
+                  <Radio value="N">否</Radio>
                 </RadioGroup>
               </FormItem>
 
-              <FormItem label="通知：" {...formItemLayout}>
-                <Switch name="notice" />
+              <FormItem label="是否添加签名" {...formItemLayout}>
+                <Switch  name="idiograph" />
               </FormItem>
               <FormItem
-                size="large"
-                label="邮件："
+                // size="large"
+                label="端口号"
                 {...formItemLayout}
                 required
-                requiredMessage="请输入正确的邮件"
+                requiredMessage="请输入端口"
               >
-                <Input htmlType="email" name="email" />
+                <Input htmlType="port" name="port" />
               </FormItem>
-              <FormItem
-                size="large"
-                label="网站地址："
-                {...formItemLayout}
-                required
-                formatMessage="请输入正确的网站地址"
-                format="url"
-              >
-                <Input
-                  name="siteUrl"
-                  type="url"
-                  placeholder="https://alibaba.github.io/ice"
-                />
+            
+              <FormItem size="large" label="短信内容："  {...formItemLayout}>
+                <Input.TextArea 
+                 maxLength={100}
+                 rows={8}
+                 hasLimitHint
+                placeholder="请输入短信内容..." />
               </FormItem>
 
-              <FormItem
-                size="large"
-                label="Github："
-                {...formItemLayout}
-                required
-                formatMessage="请输入正确的 Github 地址"
-                format="url"
-              >
-                <Input
-                  type="url"
-                  name="githubUrl"
-                  placeholder="https://github.com/alibaba/ice"
-                />
-              </FormItem>
-
-              <FormItem
-                size="large"
-                label="Twitter："
-                {...formItemLayout}
-                required
-                formatMessage="请输入正确的 Twitter 地址"
-                format="url"
-              >
-                <Input name="twitterUrl" placeholder="https://twitter.com" />
-              </FormItem>
-
-              <FormItem size="large" label="自我描述：" {...formItemLayout}>
-                <Input.TextArea placeholder="请输入描述..." />
-              </FormItem>
-              <Row style={{ marginTop: 20 }}>
-                <Col offset="3">
+              
+            </div>
+            <Row style={{ marginTop: 50 , marginLeft: 440}}>
+                <Col offset="1000000">
                   <Form.Submit
                     size="large"
                     type="primary"
-                    style={{ width: 100 }}
+                    style={{ width: 150 }}
                     validate
                     onClick={this.validateAllFormField}
                   >
@@ -193,7 +144,6 @@ export default class SettingsForm extends Component {
                   </Form.Submit>
                 </Col>
               </Row>
-            </div>
           </Form>
         </IceContainer>
       </div>
@@ -206,7 +156,7 @@ const styles = {
     textAlign: 'right',
   },
   formContent: {
-    width: '100%',
+    width: '250%',
     position: 'relative',
   },
   formItem: {
