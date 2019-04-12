@@ -109,7 +109,11 @@ export default class EnhanceTable extends Component {
 
   render() {
 
+    console.log("portTable before :");
+    console.log(portTable)
     const { portTable } = this.props.bindingData;
+    console.log(portTable)
+    console.log("--------------------分割线---------------------");
 
     return (
       <div className="filter-table">

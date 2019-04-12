@@ -1,6 +1,7 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import DataBinder from '@icedesign/data-binder';
 import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
@@ -8,6 +9,20 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 import IceIcon from '@icedesign/foundation-symbol';
+
+@DataBinder({
+  Login: {
+    url: 'http://127.0.0.1:9000/admin/login',
+    type: 'get',
+    defaultBindingData: {
+      data: {
+        username: '',
+        password: '',
+        checkbox: false
+      },
+    } 
+  },
+})
 
 @withRouter
 class UserLogin extends Component {
@@ -36,6 +51,17 @@ class UserLogin extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const {Login} = this.props.bindingData;
+    this.props.updateBindingData((values) => {
+      if (errors) {
+        console.log('errors', errors);
+        return;
+      }
+      console.log(values);
+      Message.success('登录成功');
+      this.props.history.push('/');
+    });
+
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
         console.log('errors', errors);
