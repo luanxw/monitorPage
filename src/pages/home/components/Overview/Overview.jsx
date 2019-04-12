@@ -46,7 +46,6 @@ export default class Overview extends Component {
   componentWillMount() {
     // 第一次渲染，初始化第一页的数据
   this.props.updateBindingData('countIterm');
-   console.log("test");
  }
 
 //   componentDidMount() {
@@ -84,7 +83,7 @@ export default class Overview extends Component {
     const {  countIterm } = this.props.bindingData;
     // console.log( this.props);
     const data = countIterm.data
-    console.log( data);
+    // console.log( data);
 
 
 

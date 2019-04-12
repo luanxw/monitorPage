@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import ContainerTitle from '../../../../components/ContainerTitle';
 import LineChart from '../LineChart';
+import DataBinder from '@icedesign/data-binder';
 
 const data = [
   {
@@ -68,7 +69,27 @@ const cols = {
   },
 };
 
+
+@DataBinder({
+  TbaleNumber: {
+    url: 'http://127.0.0.1:9000/count/tabel',
+    type: 'get',
+    defaultBindingData: {
+      data: []
+    },
+  },
+ 
+})
+
 export default class Commits extends Component {
+
+
+  componentDidMount() {
+    // 第一次渲染，初始化第一页的数据
+   this.props.updateBindingData('TbaleNumber');
+ }
+
+
   static displayName = 'task';
 
   static propTypes = {};
@@ -81,11 +102,16 @@ export default class Commits extends Component {
   }
 
   render() {
+
+    const {  TbaleNumber } = this.props.bindingData;
+    console.log(TbaleNumber)
+    console.log(data)
+
     return (
       <div>
         <ContainerTitle title="最近30天 任务量（单位：条）" />
         <IceContainer style={styles.container}>
-          <LineChart cols={cols} data={data} axisName="name" />
+          <LineChart cols={cols} data={TbaleNumber.data} axisName="name" />
         </IceContainer>
       </div>
     );
