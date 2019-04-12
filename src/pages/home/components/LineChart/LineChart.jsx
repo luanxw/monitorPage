@@ -16,7 +16,7 @@ export default class LineChart extends Component {
   render() {
     const { data, cols, axisName } = this.props;
     return (
-      <Chart height={300} padding={[30]} data={data} scale={cols} forceFit>
+      <Chart height={310} padding={[40]} data={data} scale={cols} forceFit>
         <Axis
           name={axisName}
           title={null}
