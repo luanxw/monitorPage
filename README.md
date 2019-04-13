@@ -28,5 +28,4 @@
 
 ## 效果图
 ![](https://raw.githubusercontent.com/luanxw/image-file/master/monitor-homepage.jpg)
-# monitorPage
 #郑州轻工业大学毕设项目
