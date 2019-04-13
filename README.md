@@ -1,4 +1,5 @@
 # ice-contract-management-admin
+![](https://img.shields.io/badge/version-1.0.0-green.svg)
 
 ## 使用
 
