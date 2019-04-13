@@ -1,6 +1,8 @@
 # ice-contract-management-admin
 ![](https://img.shields.io/badge/version-1.0.0-green.svg)
-
+![](https://img.shields.io/badge/Author-%E6%A0%BE%E5%A5%95-red.svg)
+![](https://img.shields.io/badge/version-1.0.0-green.svg)
+![](https://img.shields.io/badge/version-1.0.0-green.svg)
 ## 使用
 
 - 启动调试服务: `npm start`
