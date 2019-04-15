@@ -4,6 +4,7 @@
 ![](https://img.shields.io/badge/%E7%94%A8%E9%80%94-%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1-orange.svg)
 ![](https://img.shields.io/badge/Creation%20time-2019--04--12-blue.svg)
 ![](https://img.shields.io/badge/%E6%80%A7%E8%B4%A8-%E5%8E%9F%E5%88%9B%E8%AE%BE%E8%AE%A1-brightgreen.svg)
+![](https://img.shields.io/badge/supportBy-%E9%83%91%E5%B7%9E%E8%BD%BB%E5%B7%A5%E4%B8%9A%E5%A4%A7%E5%AD%A6%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1-brightgreen.svg)
 ## 使用
 
 - 启动调试服务: `npm start`
@@ -28,4 +29,5 @@
 
 ## 效果图
 ![](https://raw.githubusercontent.com/luanxw/image-file/master/monitor-homepage.jpg)
+
 #郑州轻工业大学毕设项目
