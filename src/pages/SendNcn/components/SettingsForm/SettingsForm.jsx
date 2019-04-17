@@ -96,15 +96,25 @@ onClose = reason => {
        //todo 执行操作
     console.log("用户选择确认");
     console.log(this.state.value)
-    const requst = new Promise((resolve, reject) => {
-      this.props.updateBindingData('CommitSend',{
-        data: this.state.value
-      })
-      resolve(this.props.bindingData)
-    })
-    requst.then(res => {
-      console.log('asdasdasd',res)
-    })
+    this.props.updateBindingData('CommitSend',{
+          data: this.state.value
+        }
+        // ,() =>{
+        //   console.log("请求后: ",this.props.bindingData)
+        //   // alert("返回数据内容：", this.props.bindingData)
+        // }
+        )
+      
+
+    // const requst = new Promise((resolve, reject) => {
+    //   this.props.updateBindingData('CommitSend',{
+    //     data: this.state.value
+    //   })
+    //   resolve(this.props.bindingData)
+    // })
+    // requst.then(res => {
+    //   console.log('asdasdasd',res)
+    // })
     
     
 
@@ -126,12 +136,12 @@ onClose = reason => {
     console.log('drop callback : ', fileList);
   };
 
-  // formChange = (value) => {
-  //   console.log('value', value);
-  //   this.setState({
-  //     value,
-  //   });
-  // };
+  formChange = (value) => {
+    // console.log('value', value);
+    this.setState({
+      value,
+    });
+  };
   
   checkData = (data) => {
     if (data.code ===200 && data.success) {
@@ -143,15 +153,12 @@ onClose = reason => {
 
   render() {
     
-    const {CommitSend} = this.props.bindingData
-    console.log('hhhhh',CommitSend);
-    
   //  checkData(CommitSend)
     return (
       <div className="settings-form" >
         <IceContainer>
-          {/* <Form value={this.state.value} onChange={this.formChange} ref="form"> */}
-          <Form value={this.state.value}  ref="form">
+          <Form value={this.state.value} onChange={this.formChange} ref="form">
+          {/* <Form value={this.state.value}  ref="form" > */}
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>发送短信</h2>
 
