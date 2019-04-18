@@ -5,7 +5,7 @@
 const headerMenuConfig = [
   {
     name: '首页',
-    path: '/',
+    path: '/home',
     icon: 'home',
   },
   {
@@ -20,14 +20,9 @@ const headerMenuConfig = [
 const asideMenuConfig = [
   {
     name: '首页',
-    path: '/dashboard',
+    path: '/home',
     icon: 'home2',
   },
-  // {
-  //   name: '项目',
-  //   path: '/services',
-  //   icon: 'cascades',
-  // },
   {
     name: '事件',
     path: '/document',
@@ -41,6 +36,11 @@ const asideMenuConfig = [
   {
     name: '发送',
     path: '/sendNCN',
+    icon: 'cascades',
+  },
+  {
+    name: '查询',
+    path: '/search',
     icon: 'cascades',
   },
   {
@@ -63,6 +63,7 @@ const asideMenuConfig = [
     path: '/setting',
     icon: 'shezhi',
   },
+  
 ];
 
 export { headerMenuConfig, asideMenuConfig };

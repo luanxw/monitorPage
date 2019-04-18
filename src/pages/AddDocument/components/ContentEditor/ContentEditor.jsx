@@ -33,7 +33,6 @@ export default class ContentEditor extends Component {
   }
 
   formChange = (value) => {
-    console.log('value', value);
     this.setState({
       value,
     });
@@ -41,7 +40,6 @@ export default class ContentEditor extends Component {
 
   handleSubmit = () => {
     this.postForm.validateAll((errors, values) => {
-      console.log('errors', errors, 'values', values);
       if (errors) {
         return false;
       }
