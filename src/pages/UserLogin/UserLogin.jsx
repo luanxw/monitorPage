@@ -67,7 +67,6 @@ class UserLogin extends Component {
         console.log('errors', errors);
         return;
       }
-      console.log(values);
       Message.success('登录成功');
       this.props.history.push('/home');
       sessionStorage.setItem('user', JSON.stringify(Login))

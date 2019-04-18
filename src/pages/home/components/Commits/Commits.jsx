@@ -104,8 +104,6 @@ export default class Commits extends Component {
   render() {
 
     const {  TbaleNumber } = this.props.bindingData;
-    console.log(TbaleNumber)
-    console.log(data)
 
     return (
       <div>

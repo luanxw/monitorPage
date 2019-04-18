@@ -96,7 +96,6 @@ export default class BoardList extends Component {
     // };
 
     const { TableContent } = this.props.bindingData;
-    console.log(TableContent)
 
 
     return (

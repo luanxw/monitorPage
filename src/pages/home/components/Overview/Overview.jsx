@@ -48,11 +48,7 @@ export default class Overview extends Component {
   this.props.updateBindingData('countIterm');
  }
 
-//   componentDidMount() {
-//     // 第一次渲染，初始化第一页的数据
-//     console.log("luan:");
-//    this.props.updateBindingData('countIterm');
-//  }
+
  constructor(props) {
   super(props);
   this.state = {
@@ -67,23 +63,13 @@ export default class Overview extends Component {
 
   static defaultProps = {};
 
-  // shouldComponentUpdate(next, pre){
-  //   // console.log(this.state.bindingData)
-  //   // console.log(next)
-  //   if(this.state.bindingData.countIterm.data !== next.countIterm.data){
-  //     return true
-  //   }
-  //   return false
-  // }
-
+  
  
 
   render() {
 
     const {  countIterm } = this.props.bindingData;
-    // console.log( this.props);
     const data = countIterm.data
-    // console.log( data);
 
 
 

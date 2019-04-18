@@ -16,16 +16,17 @@ import Gateway from './pages/Gateway';
 
 import Port from './pages/Port';
 
+import Search from './pages/Search';
 import Activities from './pages/Activities';
 
 const routerConfig = [
   {
-    path: '/member',
-    component: Member,
+    path: '/user/login',
+    component: UserLogin,
   },
   {
-    path: '/add/document',
-    component: AddDocument,
+    path: '/member',
+    component: Member,
   },
   {
     path: '/home',
@@ -48,8 +49,8 @@ const routerConfig = [
     component: Activities,
   },
   {
-    path: '/user/login',
-    component: UserLogin,
+    path: '/add/document',
+    component: AddDocument,
   },
   {
     path: '/add/member',
@@ -70,6 +71,10 @@ const routerConfig = [
   {
     path: '/port',
     component: Port,
+  },
+  {
+    path: '/search',
+    component: Search,
   },
 ];
 
