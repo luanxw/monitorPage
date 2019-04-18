@@ -127,7 +127,7 @@ export default class Header extends Component {
                   />
                   <div className="user-profile">
                     <span className="user-name" style={{ fontSize: '11px' }}>
-                      {this.state.user.username}
+                      {this.state.user === null ? "admin" : this.state.user.username}
                     </span>
                     <br />
                     <span className="user-department" style={{ fontSize: '6px' }}>管理员</span>
