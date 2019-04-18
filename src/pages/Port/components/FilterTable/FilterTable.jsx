@@ -9,7 +9,7 @@ import FilterForm from './Filter';
 @DataBinder({
   portTable: {
     url: 'http://127.0.0.1:9000/port/querypage',
-    type: 'get',
+    method: 'get',
     data: {
       page: 1,
       pagesize: 8,
@@ -29,9 +29,14 @@ import FilterForm from './Filter';
   },
   deleteUser: {
     url: 'http://127.0.0.1:9000/port/delete_by_id',
-    type: 'delete',
+    method: 'delete',
     
-  }
+  },
+  SaveUser: {
+    url: 'http://127.0.0.1:9000/port/save_port',
+    method: 'post',
+   
+  },
 })
 export default class EnhanceTable extends Component {
 
@@ -69,6 +74,35 @@ export default class EnhanceTable extends Component {
    });
  };
 
+ constructor(props) {
+  super(props);
+  this.state = {
+    value: {
+
+    },
+  };
+}
+
+onOpen = () => {
+  this.setState({
+      visible: true
+  });
+};
+
+onClose = reason => {
+if(reason == 'true' ){
+  this.props.updateBindingData('SaveUser',{
+        data: this.state.value
+      })
+
+}else{
+  alert("已取消数据发送请求")
+}
+  this.setState({
+    visible: false
+  });
+};
+
 
   renderTitle = (value, index, record) => {
     return (
@@ -89,39 +123,61 @@ export default class EnhanceTable extends Component {
         className="filter-table-operation"
         style={styles.filterTableOperation}
       >
-        <a href="#" style={styles.operationItem} target="_blank">
+        <a  style={styles.operationItem} target="_blank">
           修改
         </a>
-        <a href="#" style={styles.operationItem} target="_blank">
+        <a 
+        onClick={() => this.handleDelete(value)}
+        style={styles.operationItem} target="_blank">
           删除
         </a>
       </div>
     );
   };
 
-  renderStatus = (value) => {
-    return (
-      <IceLabel inverse={false} status="default">
-        {value}
-      </IceLabel>
-    );
+  // renderStatus = (value) => {
+  //   return (
+  //     <IceLabel inverse={false} status="default">
+  //       {value}
+  //     </IceLabel>
+  //   );
+  // };
+
+  handleDelete = (index) => {
+    Dialog.confirm({
+      title: '删除',
+      content: '确认删除吗?',
+      onOk: () => {
+
+        return new Promise(resolve => {
+          setTimeout(resolve, 200);
+      }).then(() => {
+          Message.success('删除成功!');
+      });
+        // this.props.updateBindingData('accountTable',{
+        //   name: this.props.userName.value,
+        // });
+        // const { data } = this.state;
+
+        // data.splice(index, index + 1);
+        // this.setState({
+        //   data,
+        // });
+      },
+    });
   };
 
   render() {
 
-    console.log("portTable before :");
-    console.log(portTable)
     const { portTable } = this.props.bindingData;
-    console.log(portTable)
-    console.log("--------------------分割线---------------------");
-
     return (
       <div className="filter-table">
         <IceContainer title="添加端口">
           <FilterForm
+            value={this.state.value}
             onChange={this.filterFormChange}
-            onSubmit={this.filterTable}
-            onReset={this.resetFilter}
+            onSubmit={this.onOpen}
+            // onReset={this.resetFilter}
           />
         </IceContainer>
         <IceContainer>
@@ -131,27 +187,27 @@ export default class EnhanceTable extends Component {
             style={styles.basicTable}
             hasBorder={false}
           >
-            {/* <Table.Column
-              title="问题描述"
-              cell={this.renderTitle}
-              width={320}
-            /> */}
+           
             <Table.Column 
             title="端口号" 
             dataIndex="port" 
+            name='port'
             />
             <Table.Column
               title="网关名"
               dataIndex="gwName"
+              name='gwName'
             />
               <Table.Column
               title=" 拥有者"
               dataIndex="user"
+              name='user'
               cell={this.renderStatus}
             />
             <Table.Column
               title=" 激活状态（Y/N）"
               dataIndex="validFlag"
+              name='validFlag'
               cell={this.renderStatus}
             />
             <Table.Column
@@ -161,9 +217,25 @@ export default class EnhanceTable extends Component {
             />
           </Table>
           <div style={styles.paginationWrapper}>
-            <Pagination />
+          <Pagination 
+          current={portTable.page}
+          pageSize={portTable.pageSize}
+          total={portTable.total}
+          onChange={this.changePage}
+          style={{marginTop: 20}}
+        />
           </div>
         </IceContainer>
+
+         {/* 模拟框输出 */}
+         <Dialog
+            title="确认提交"
+            visible={this.state.visible}
+            onOk={this.onClose.bind(this, 'true')}
+            onCancel={this.onClose.bind(this, 'fasle')}
+            onClose={this.onClose}>
+            确认要提交端口信息吗？
+        </Dialog>
       </div>
     );
   }

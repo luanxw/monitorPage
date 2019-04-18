@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 import './SettingsForm.scss';
+import { Dialog } from '@alifd/next';
+import DataBinder from '@icedesign/data-binder';
+import { resolve } from 'q';
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
@@ -29,6 +32,39 @@ function onError(file) {
   console.log('onError callback : ', file);
 }
 
+/**
+ * 自定义的 json request client
+ */
+// function request(opts) {
+//   return new Promise((resolve, reject) => {
+//     jsonp(opts.url, { name: 'commitsend' }, (err, data) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         console.log("luan")
+//         // resolve({ data });
+//       }
+//     })
+//   });
+// }
+
+@DataBinder({
+  'CommitSend': {
+    url: 'http://localhost:9000/send',
+    method: 'post',
+    // data: {
+    //   data: ''
+    // },
+    // AJAX 部分的参数完全继承自 axios ，参数请详见：https://github.com/axios/axios
+    // 下面是请求会返回的默认数据
+    // defaultBindingData: {
+    //   data: {
+    //     data: ''
+    //   }
+    // }
+  }
+// }, { requestClient: request })
+})
 export default class SettingsForm extends Component {
   static displayName = 'SettingsForm';
 
@@ -40,18 +76,57 @@ export default class SettingsForm extends Component {
     super(props);
     this.state = {
       value: {
-        name: '',
-        gender: 'male',
-        notice: false,
-        email: '',
-        avatar: [],
-        siteUrl: '',
-        githubUrl: '',
-        twitterUrl: '',
-        description: '',
+        // user: '',
+        // password: '',
+        // text: ''
       },
     };
   }
+
+onOpen = () => {
+    this.setState({
+        visible: true
+    });
+};
+
+onClose = reason => {
+  // console.log(reason)
+  // alert("确认信息："+reason)
+  if(reason == 'true' ){
+       //todo 执行操作
+    console.log("用户选择确认");
+    console.log(this.state.value)
+    this.props.updateBindingData('CommitSend',{
+          data: this.state.value
+        }
+        // ,() =>{
+        //   console.log("请求后: ",this.props.bindingData)
+        //   // alert("返回数据内容：", this.props.bindingData)
+        // }
+        )
+      
+
+    // const requst = new Promise((resolve, reject) => {
+    //   this.props.updateBindingData('CommitSend',{
+    //     data: this.state.value
+    //   })
+    //   resolve(this.props.bindingData)
+    // })
+    // requst.then(res => {
+    //   console.log('asdasdasd',res)
+    // })
+    
+    
+
+  }else{
+    console.log("用户选择取消");
+  }
+   
+    this.setState({
+        visible: false
+    });
+};
+
 
   onDragOver = () => {
     console.log('dragover callback');
@@ -62,26 +137,28 @@ export default class SettingsForm extends Component {
   };
 
   formChange = (value) => {
-    console.log('value', value);
+    // console.log('value', value);
     this.setState({
       value,
     });
   };
+  
+  checkData = (data) => {
+    if (data.code ===200 && data.success) {
+      alert("" , CommitSend)
+    }else{
 
-  validateAllFormField = (values, errors) => {
-    console.log('error', errors, 'value', values);
-    if (!errors) {
-      // 提交当前填写的数据
-    } else {
-      // 处理表单报错
     }
-  };
+  }
 
   render() {
+    
+  //  checkData(CommitSend)
     return (
       <div className="settings-form" >
         <IceContainer>
           <Form value={this.state.value} onChange={this.formChange} ref="form">
+          {/* <Form value={this.state.value}  ref="form" > */}
             <div style={styles.formContent}>
               <h2 style={styles.formTitle}>发送短信</h2>
 
@@ -93,7 +170,7 @@ export default class SettingsForm extends Component {
                 maxLength={11}
                 requiredMessage="必填"
               >
-                <Input  name="number" placeholder="eg:18866669999" />
+                <Input  name="phone" placeholder="eg:18866669999" />
               </FormItem>
              
               <FormItem
@@ -108,9 +185,16 @@ export default class SettingsForm extends Component {
                 </RadioGroup>
               </FormItem>
 
-              <FormItem label="是否添加签名" {...formItemLayout}>
-                <Switch  name="idiograph" />
+              <FormItem
+                // size="large"
+                label="标签"
+                {...formItemLayout}
+                // required
+                requiredMessage="添加标签"
+              >
+                <Input htmlType="idiograph" placeholder="eg:【轻工大】,不添加标签，即使用默认标签" name="idiograph" />
               </FormItem>
+
               <FormItem
                 // size="large"
                 label="端口号"
@@ -118,9 +202,28 @@ export default class SettingsForm extends Component {
                 required
                 requiredMessage="请输入端口"
               >
-                <Input htmlType="port" name="port" />
+                <Input htmlType="port" placeholder="eg:8080" name="port" />
               </FormItem>
-            
+
+              <FormItem
+                // size="large"
+                label="用户名"
+                {...formItemLayout}
+                required
+                requiredMessage="请输入用户"
+              >
+                <Input htmlType="user" placeholder="eg:admin" name="user" />
+              </FormItem>
+              <FormItem
+                // size="large"
+                label="密码"
+                {...formItemLayout}
+                required
+                requiredMessage="请输入密码"
+              >
+                <Input htmlType="password" placeholder="eg:admin" name="password" />
+              </FormItem>
+
               <FormItem size="large" label="短信内容："  {...formItemLayout}>
                 <Input.TextArea 
                  name="context"
@@ -130,7 +233,6 @@ export default class SettingsForm extends Component {
                 placeholder="请输入短信内容..." />
               </FormItem>
 
-              
             </div>
             <Row style={{ marginTop: 50 , marginLeft: 440}}>
                 <Col offset="1000000">
@@ -139,7 +241,7 @@ export default class SettingsForm extends Component {
                     type="primary"
                     style={{ width: 150 }}
                     validate
-                    onClick={this.validateAllFormField}
+                    onClick={this.onOpen}
                   >
                     提 交
                   </Form.Submit>
@@ -147,7 +249,17 @@ export default class SettingsForm extends Component {
               </Row>
           </Form>
         </IceContainer>
+        {/* 模拟框输出 */}
+        <Dialog
+            title="确认提交"
+            visible={this.state.visible}
+            onOk={this.onClose.bind(this, 'true')}
+            onCancel={this.onClose.bind(this, 'fasle')}
+            onClose={this.onClose}>
+            确认要提交发送信息吗？
+        </Dialog>
       </div>
+
     );
   }
 }

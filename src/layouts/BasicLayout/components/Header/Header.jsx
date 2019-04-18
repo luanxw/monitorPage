@@ -9,6 +9,12 @@ import './Header.scss';
 
 @withRouter
 export default class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: JSON.parse(sessionStorage.getItem('user'))
+    }
+  }
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -121,7 +127,7 @@ export default class Header extends Component {
                   />
                   <div className="user-profile">
                     <span className="user-name" style={{ fontSize: '11px' }}>
-                      栾雪伟
+                      {this.state.user === null ? "admin" : this.state.user.username}
                     </span>
                     <br />
                     <span className="user-department" style={{ fontSize: '6px' }}>管理员</span>
