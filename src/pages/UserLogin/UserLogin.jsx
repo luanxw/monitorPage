@@ -51,16 +51,16 @@ class UserLogin extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {Login} = this.props.bindingData;
-    this.props.updateBindingData((values) => {
-      if (errors) {
-        console.log('errors', errors);
-        return;
-      }
-      console.log(values);
-      Message.success('登录成功');
-      this.props.history.push('/');
-    });
+    const Login = this.state.value;
+    // this.props.updateBindingData((values) => {
+    //   if (errors) {
+    //     console.log('errors', errors);
+    //     return;
+    //   }
+    //   console.log(values);
+    //   Message.success('登录成功');
+    //   this.props.history.push('/home');
+    // });
 
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
@@ -69,7 +69,8 @@ class UserLogin extends Component {
       }
       console.log(values);
       Message.success('登录成功');
-      this.props.history.push('/');
+      this.props.history.push('/home');
+      sessionStorage.setItem('user', JSON.stringify(Login))
     });
   };
 
