@@ -28,9 +28,14 @@ import FilterForm from './Filter';
     //     data: []
     // }
   },
-  deleteUser: {
+  deleteGateway: {
     url: 'http://127.0.0.1:9000/gateway/delete_by_id',
-    type: 'delete',
+    method: 'delete',
+    
+  },
+  SaveGateway: {
+    url: 'http://127.0.0.1:9000/gateway/save_gateway',
+    method: 'post',
     
   }
 })
@@ -69,6 +74,51 @@ export default class EnhanceTable extends Component {
      }
    });
  };
+ constructor(props) {
+  super(props);
+  this.state = {
+    value: {
+
+    },
+  };
+}
+
+onOpen = () => {
+  this.setState({
+      visible: true
+  });
+};
+
+onClose = reason => {
+if(reason == 'true' ){
+  this.props.updateBindingData('SaveGateway',{
+        data: this.state.value
+      })
+
+}else{
+  alert("已取消数据发送请求")
+}
+  this.setState({
+    visible: false
+  });
+};
+
+
+ handleDelete = (index) => {
+  Dialog.confirm({
+    title: '删除',
+    content: '确认删除吗?',
+    onOk: () => {
+
+      return new Promise(resolve => {
+        setTimeout(resolve, 200);
+    }).then(() => {
+        Message.success('删除成功!');
+    });
+      
+    },
+  });
+};
  
   renderTitle = (value, index, record) => {
     return (
@@ -91,12 +141,12 @@ export default class EnhanceTable extends Component {
       >
         <a 
         onClick={() => this.updateNumber(value)}
-        href="#" style={styles.operationItem} target="_blank">
+         style={styles.operationItem} target="_blank">
           修改
         </a>
         <a 
         onClick={() => this.handleDelete(value)}
-        href="#" style={styles.operationItem} target="_blank">
+        style={styles.operationItem} target="_blank">
           删除
         </a>
       </div>
@@ -111,34 +161,7 @@ export default class EnhanceTable extends Component {
     );
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: {
   
-      },
-    };
-  }
-  
-  onOpen = () => {
-    this.setState({
-        visible: true
-    });
-  };
-  
-  onClose = reason => {
-  if(reason == 'true' ){
-    this.props.updateBindingData('SaveUser',{
-          data: this.state.value
-        })
-  
-  }else{
-    alert("已取消数据发送请求")
-  }
-    this.setState({
-      visible: false
-    });
-  };
   
   render() {
     const { gatewayTable } = this.props.bindingData;
@@ -147,9 +170,8 @@ export default class EnhanceTable extends Component {
       <div className="filter-table">
         <IceContainer title="添加网关">
           <FilterForm
-            onChange={this.filterFormChange}
-            onSubmit={this.filterTable}
-            onReset={this.resetFilter}
+           value={this.state.value}
+           onSubmit={this.onOpen}
           />
         </IceContainer>
         <IceContainer>
