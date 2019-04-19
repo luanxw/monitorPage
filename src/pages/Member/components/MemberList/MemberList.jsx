@@ -22,12 +22,10 @@ import ContainerTitle from '../../../../components/ContainerTitle';
       },
       list: []
     },
-    // defaultBindingData: {
-    //     data: []
-    // }
+
   },
-  searchUser: {
-    url: 'http://127.0.0.1:9000/user/queryall',
+  selectUser: {
+    url: 'http://127.0.0.1:9000/user/select_by_name',
     type: 'get',
     defaultBindingData: {
       data: {
@@ -48,10 +46,19 @@ import ContainerTitle from '../../../../components/ContainerTitle';
 
 // @withRouter
 export default class MemberList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputData: '',
+      randerData: []
+    };
+    this.changePage = this.changePage.bind(this)
+  }
   componentDidMount() {
      // 第一次渲染，初始化第一页的数据
-     const {accountTable} = this.props.bindingData;
-    this.props.updateBindingData('accountTable');
+    // this.props.updateBindingData('accountTable');
+    this.changePage(1)
   }
 
   refresh = () => {
@@ -59,7 +66,15 @@ export default class MemberList extends Component {
     this.props.updateBindingData('accountTable');
   };
 
-  changePage = (pageNo) => {
+  searchInput = (e) =>{
+    //  console.log(e)
+    this.setState({
+      inputData: e,
+      randerData: this.state.randerData
+    })
+  }
+
+  changePage(pageNo) {
     // 有些参数可能需要从数据中获取
     const {accountTable} = this.props.bindingData;
     this.props.updateBindingData('accountTable', {
@@ -79,25 +94,35 @@ export default class MemberList extends Component {
           pagesize: 8,
         }
       }
-    });
+    },
+    ({data}) => {
+  
+      this.setState({
+        randerData: [...data.list]
+      })
+    }
+    );
   };
-  searchUser = (pageNo) => {
+
+  searchUser = () => {
     // 有些参数可能需要从数据中获取
-    const {accountTable} = this.props.bindingData;
-    this.props.updateBindingData('accountTable', {
-      params: {
-        name :this.props.userName.value,  
-        page: pageNo,
-        pagesize: 8,
-      },
-      // 通过设置这个数据，可以快速将页码切换，避免等接口返回才会切换页面
-      // 这里的变更是同步生效的
-      // 需要注意多层级数据更新的处理，避免丢掉某些数据
-     
-    });
+    this.props.updateBindingData('selectUser' , {
+      params:{
+        name: this.state.inputData,
+        pagesize: 8
+      }
+
+      }, ({data}) => {
+        this.setState({
+          randerData: [...data.list]
+        })
+      }
+      )
+
   };
   handleAdd = () => {
-    this.props.history.push('/AddMember/AddMember');
+    // this.props.history.push('/AddMember/AddMember');
+    Message.error("只有超级管理员才能添加用户")
   };
 
   handleDelete = (index) => {
@@ -107,19 +132,11 @@ export default class MemberList extends Component {
       onOk: () => {
 
         return new Promise(resolve => {
-          setTimeout(resolve, 1000);
+          setTimeout(resolve, 100);
       }).then(() => {
-          Message.success('删除成功!');
+          Message.success('非超级管理员，不允许删除用户!');
       });
-        // this.props.updateBindingData('accountTable',{
-        //   name: this.props.userName.value,
-        // });
-        // const { data } = this.state;
 
-        // data.splice(index, index + 1);
-        // this.setState({
-        //   data,
-        // });
       },
     });
   };
@@ -151,16 +168,13 @@ export default class MemberList extends Component {
 
   render() {
 
-    const { accountTable } = this.props.bindingData;
-
-
+    const { accountTable, selectUser } = this.props.bindingData;
       
-
     return (
       
     <div>
       <IceContainer style={styles.searchUser} >
-        <Input  hasClear placeholder="输入用户名"   name="userName" /> 
+        <Input  hasClear placeholder="输入用户名关键字"   name="userName"   onChange={this.searchInput.bind(this)} /> 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Button onClick={this.searchUser} type="primary">搜索用户</Button>
         </IceContainer>
@@ -172,7 +186,7 @@ export default class MemberList extends Component {
           style={styles.title}
           onClick={this.handleAdd}
         />
-        <Table dataSource={accountTable.list}  loading={accountTable.__loading}>
+        <Table dataSource={this.state.randerData}  loading={accountTable.__loading}>
           <Table.Column dataIndex="userName" title="用户名" style={styles.name} />
           <Table.Column dataIndex="email" title="邮件地址"  style={styles.name}/>
           <Table.Column dataIndex="createAt" title="创建日期" style={styles.name}/>
