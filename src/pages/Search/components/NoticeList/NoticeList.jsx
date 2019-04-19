@@ -11,34 +11,57 @@ import ContainerTitle from '../../../../components/ContainerTitle';
     type: 'get',
     data: {
       page: 1,
-      pagesize: 15,
+      pagesize: 8,
     },
     defaultBindingData: {
       data: {
         page: 1,
-        pageSize: 15,
+        pageSize: 8,
         total: 8,
         size: 8
       },
       list: []
     },
-    // defaultBindingData: {
-    //     data: []
-    // }
+  },
+  
+  selectIterm: {
+    url: 'http://127.0.0.1:9000/iterm/select_by_mark',
+    type: 'get',
+    defaultBindingData: {
+      data: {
+        page: 1,
+        pageSize: 8,
+        total: 8,
+        size: 8
+      },
+      list: []
+    },
   }
+
 })
 
 export default class MemberList extends Component {
   componentDidMount() {
      // 第一次渲染，初始化第一页的数据
-     const {ItermTable} = this.props.bindingData;
-    this.props.updateBindingData('ItermTable');
+    this.changePage(1)
   }
 
-  refresh = () => {
-     // 刷新功能，更新数据
-    this.props.updateBindingData('ItermTable');
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputData: '',
+      randerData: []
+    };
+    this.changePage = this.changePage.bind(this)
+  }
+
+  searchInput = (e) =>{
+    //  console.log(e)
+    this.setState({
+      inputData: e,
+      randerData: this.state.randerData
+    })
+  }
 
   changePage = (pageNo) => {
     // 有些参数可能需要从数据中获取
@@ -47,35 +70,50 @@ export default class MemberList extends Component {
       params: {
         ...ItermTable.pagination,
         page: pageNo,
-        pagesize: 15,
-      },
-      // 通过设置这个数据，可以快速将页码切换，避免等接口返回才会切换页面
-      // 这里的变更是同步生效的
-      // 需要注意多层级数据更新的处理，避免丢掉某些数据
-      defaultBindingData: {
-        ...ItermTable,
-        pagination: {
-          ...ItermTable,
-          page: pageNo,
-          pagesize: 15,
-        }
-      }
-    });
-  };
-  searchUser = (pageNo) => {
-    // 有些参数可能需要从数据中获取
-    const {ItermTable} = this.props.bindingData;
-    this.props.updateBindingData('ItermTable', {
-      params: {
-        name :this.props.userName.value,  
-        page: pageNo,
         pagesize: 8,
       },
       // 通过设置这个数据，可以快速将页码切换，避免等接口返回才会切换页面
       // 这里的变更是同步生效的
       // 需要注意多层级数据更新的处理，避免丢掉某些数据
-     
-    });
+      
+    },
+    ({data}) => {
+      if(data == null){
+        Message.error("数据库短信数据记录为空")
+      }else{
+        this.setState({
+          randerData: [...data.list]
+        })
+      }
+    }
+    );
+  };
+
+  searchUser = () => {
+    // 有些参数可能需要从数据中获取
+    console.log(this.state.inputData)
+    this.props.updateBindingData('selectIterm' , {
+      params:{
+        mark: this.state.inputData,
+      },
+    
+      }, ({data}) => {
+        console.log(data)
+        if(typeof JSON.stringify(data) == '{}'){
+          this.forceUpdate();
+
+          Message.error("不存在对应的短信数据记录")
+
+
+          return
+
+        }
+        this.setState({
+          randerData: [data]
+        })
+      }
+      )
+
   };
 
   handleDelete = (index) => {
@@ -87,17 +125,8 @@ export default class MemberList extends Component {
         return new Promise(resolve => {
           setTimeout(resolve, 300);
       }).then(() => {
-          Message.success('删除成功!');
+          Message.success('非超级管理员，不允许删除短信数据!');
       });
-        // this.props.updateBindingData('ItermTable',{
-        //   name: this.props.userName.value,
-        // });
-        // const { data } = this.state;
-
-        // data.splice(index, index + 1);
-        // this.setState({
-        //   data,
-        // });
       },
     });
   };
@@ -129,15 +158,17 @@ export default class MemberList extends Component {
 
   render() {
 
-    const { ItermTable } = this.props.bindingData;
+    const { ItermTable , selectIterm} = this.props.bindingData;
 
     return (
       
     <div>
       <IceContainer style={styles.searchUser} >
-        <Input  hasClear placeholder="短信唯一标示"   name="mark" /> 
+        <Input  hasClear placeholder="短信唯一标示" onChange={this.searchInput.bind(this)}   name="marks" /> 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button onClick={this.searchUser} type="primary">搜索短信任务</Button>
+        <Button 
+        onClick={this.searchUser} 
+        type="primary">搜索短信任务</Button>
         </IceContainer>
 
         <IceContainer style={styles.container}>
@@ -146,7 +177,7 @@ export default class MemberList extends Component {
           style={styles.title}
           onClick={this.handleAdd}
         />
-        <Table dataSource={ItermTable.list}  loading={ItermTable.__loading}>
+        <Table dataSource={this.state.randerData}  loading={this.state.randerData.__loading}>
           <Table.Column dataIndex="uniqueMark" title="唯一标示" style={styles.name} />
           <Table.Column dataIndex="requestBatch" title="请求批次号"  style={styles.name}/>
           <Table.Column dataIndex="Port" title="端口" style={styles.name}/>
