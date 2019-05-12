@@ -90,12 +90,9 @@ onOpen = () => {
 };
 
 onClose = reason => {
-  // console.log(reason)
-  // alert("确认信息："+reason)
   if(reason == 'true' ){
        //todo 执行操作
-    console.log("用户选择确认");
-    console.log(this.state.value)
+ 
     this.props.updateBindingData('CommitSend',{
           data: this.state.value
         }
@@ -119,7 +116,12 @@ onClose = reason => {
     
 
   }else{
-    console.log("用户选择取消");
+    this.setState({
+      visible: false
+  });
+    alert("已经取消数据发送请求")
+
+    // console.log("用户选择取消");
   }
    
     this.setState({
